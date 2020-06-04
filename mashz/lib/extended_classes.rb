@@ -29,22 +29,28 @@ end
 class Array
 	$Array_strip_voids_desc = 
 <<DESC
-		Array@strip_voids()
-		--> strips voids (nil or free spaces)
-		--> returns an array by stripping nil or space elements
-		--> strip_voids!() uses O(n^2)
+\tArray@strip_voids()\n
+\t--> strips voids (nil or free spaces)
+\t--> returns an array by stripping nil or space elements
+\t--> strip_voids!() uses O(n^2)
 DESC
 	
 	def strip_voids()
 		array = []
-		self.each{|element| array << element if element.to_s.strip.length==0}
+		self.each{|element| array << element if not element.to_s.strip.length==0}
 		array
 	end
 	
 	def strip_voids!
-		self.each do |element|
-			self.delete(element) if element.to_s.strip.length==0
+		indx = 0
+		while indx < self.length do
+			if self[indx].to_s.strip.length == 0 then
+				self.delete(self[indx])
+			else
+				indx += 1
+			end
 		end
+		
 		self
 	end
 	
@@ -55,3 +61,7 @@ DESC
 	
 end
 
+
+print([1," ", 23, nil, 48, "       ", "  ", nil, 2].strip_voids)
+puts
+print([1," ", 23, nil, 48, "       ", "  ", nil, 2].strip_voids!)

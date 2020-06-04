@@ -1,4 +1,5 @@
 #! /usr/bin/ruby
-puts(require_relative("./methods.rb"))
-puts(require_relative("./extended_classes.rb"))
+puts("Loading methods: #{require_relative("./methods.rb")}")
+puts("Loading extended classes: #{require_relative("./extended_classes.rb")}")
+
 
