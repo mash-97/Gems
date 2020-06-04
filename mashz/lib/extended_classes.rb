@@ -60,8 +60,3 @@ DESC
 	end
 	
 end
-
-
-print([1," ", 23, nil, 48, "       ", "  ", nil, 2].strip_voids)
-puts
-print([1," ", 23, nil, 48, "       ", "  ", nil, 2].strip_voids!)
