@@ -12,6 +12,11 @@ class Integer
 		(1..self).inject{|x,y| x*y}
 	end
 	
+	def positify
+		return self.positive? ? self : self*(-1)
+	end
+	
+	
 	def bits
 		number = self
 		bits = ""
@@ -22,11 +27,21 @@ class Integer
 		end
 		return bits.reverse
 	end
+	
+	alias :positified :positify
 end
 
 
+class Float
+	def positify()
+		return self.positive? ? self : self * (-1)
+	end
+	alias :positified :positify
+end
+
 
 class Array
+
 	$Array_strip_voids_desc = 
 <<DESC
 \tArray@strip_voids()\n
@@ -38,7 +53,7 @@ DESC
 	def strip_voids()
 		array = []
 		self.each{|element| array << element if not element.to_s.strip.length==0}
-		array
+		return array
 	end
 	
 	def strip_voids!
@@ -51,7 +66,7 @@ DESC
 			end
 		end
 		
-		self
+		return self
 	end
 	
 	def nprint()
@@ -60,7 +75,6 @@ DESC
 	end
 	
 end
-
 
 
 class String
@@ -77,29 +91,65 @@ class String
 	end
 end
 
-#~ require 'minitest/autorun'
-#~ class TestTitleize < Minitest::Test
-	#~ def test_basic()
-		#~ assert_equal("This Is Test.", "this is test.".titleize())
-		#~ assert_equal("THi5 3is A Te*t9", "tHi5 3is A te*t9".titleize())
-	#~ end
-	
-	#~ def test_vowels()
-		#~ assert_equal(['i', 'i', 'a', 'e'], "This is a test".vowels())
-		#~ assert_equal(['o', 'u', 'e', 'o', 'e'], "you're love".vowels())
-		#~ assert_equal(['A', 'a', 'e', 'o', 'I', 'I', 'o', 'u', 'o', 'a', 'E'], "And baby! Let's do IT! I'm your bo7a!E".vowels())
-	#~ end
-	
-	#~ def test_consonants()
-		#~ assert_equal(['M', 'y', 'n', 'm', 's'], "My name is!".consonants())
-	#~ end
-	
-	#~ def test_hard()
-		#~ assert_equal("Abcd Efg Hij Klkmn O P Qrstuv Wxyz", "abcd efg hij klkmn o p qrstuv wxyz".titleize())
-	#~ end
-#~ end
 
+class File
+
+	$File_uniqFin_desc =
+<<DESC
+\tFile::uniqFin(basename, directory=Dir.pwd())\n
+\t--> Modifies the basename to have a uniq file name trailed
+\t--> with a unique hash id according to the file names in the 
+\t--> current directory.
+DESC
+
+	def self.uniqFin(basename, directory=Dir.pwd(), max_trials=100)
+		return nil if not Dir.exists?(directory)
+		ext = File.extname(basename)
+		file_name = basename
+		c_trials = 1
+		while File.exists?(File.join(directory, file_name)) and c_trials <= max_trials do 
+			if ext.to_s.length != 0 then
+				file_name = basename.sub(ext, "_"+Time.now.hash.positified.to_s+ext)
+			else
+				file_name = basename+"_"+Time.now.hash.positified.to_s
+			end
+			c_trials += 1
+		end
+		
+		return file_name
+	end
 	
+	def self.size_mb(file_path, round_val=6)
+		(File.size(file_path).to_f / 1024**2).round(round_val)
+	end
+end
+
+
+class Dir
 	
+	$Dir_workify_desc = 
+<<DESC
+\tDir#workify(dir_path, sym_ign=false, &block)\n
+\t--> this method is used to yield the given block under terms of working with all the elements inside of the given dir_path.
+\t--> returns the array of the elements inside of the dir_path 
+\t--> returns false if the dir_path doesn't exist
+\t--> Ignores Symbolic Link to yield at default
+DESC
+
+	def self.workify(dir_path, sym_ign=false, &block)
+		return false if not Dir.exists?(dir_path)
+		
+		Dir.foreach(dir_path) do |file_name|
+			file_path = File.join(dir_path, file_name)
+			
+			next if file_name == "." or file_name == ".." or (File.symlink?(file_path) and not sym_ign)
+			
+			Dir.workify(file_path, sym_ign, &block) if File.directory?(file_path) 
+			
+			yield(file_path) if File.file?(file_path)
+		end
+	end
+end
+
 	
 		
