@@ -1,22 +1,22 @@
 class Integer
-	@@factorial_hash = Hash.new do 
+	@@factorial_hash = Hash.new do
 		|hself, key|
 		hself[key] = (key==0 ? 1 : (Math::gamma(key).floor)*key)
 	end
-	
+
 	def facto
 		return @@factorial_hash[self]
 	end
-	
+
 	def factorial
 		(1..self).inject{|x,y| x*y}
 	end
-	
+
 	def positify
 		return self.positive? ? self : self*(-1)
 	end
-	
-	
+
+
 	def bits
 		number = self
 		bits = ""
@@ -27,7 +27,7 @@ class Integer
 		end
 		return bits.reverse
 	end
-	
+
 	alias :positified :positify
 end
 
@@ -42,20 +42,20 @@ end
 
 class Array
 
-	$Array_strip_voids_desc = 
+	$Array_strip_voids_desc =
 <<DESC
 \tArray@strip_voids()\n
 \t--> strips voids (nil or free spaces)
 \t--> returns an array by stripping nil or space elements
 \t--> strip_voids!() uses O(n^2)
 DESC
-	
+
 	def strip_voids()
 		array = []
 		self.each{|element| array << element if not element.to_s.strip.length==0}
 		return array
 	end
-	
+
 	def strip_voids!
 		indx = 0
 		while indx < self.length do
@@ -65,15 +65,15 @@ DESC
 				indx += 1
 			end
 		end
-		
+
 		return self
 	end
-	
+
 	def nprint()
 		(0...(self.length-1)).each{|indx| print("#{self[indx]} ")}
 		puts(print(self[self.length-1]))
 	end
-	
+
 end
 
 
@@ -81,11 +81,11 @@ class String
 	def vowels()
 		self.scan(/[aeiouAEIOU]/)
 	end
-	
+
 	def consonants()
 		self.scan(/[^aeiouAEIOU\W\d\s]/)
 	end
-	
+
 	def titleize()
 		self.gsub(/(\A|\s)\w/){|letter| letter.upcase}
 	end
@@ -98,7 +98,7 @@ class File
 <<DESC
 \tFile::uniqFin(basename, directory=Dir.pwd())\n
 \t--> Modifies the basename to have a uniq file name trailed
-\t--> with a unique hash id according to the file names in the 
+\t--> with a unique hash id according to the file names in the
 \t--> current directory.
 DESC
 
@@ -107,7 +107,7 @@ DESC
 		ext = File.extname(basename)
 		file_name = basename
 		c_trials = 1
-		while File.exists?(File.join(directory, file_name)) and c_trials <= max_trials do 
+		while File.exists?(File.join(directory, file_name)) and c_trials <= max_trials do
 			if ext.to_s.length != 0 then
 				file_name = basename.sub(ext, "_"+Time.now.hash.positified.to_s+ext)
 			else
@@ -115,10 +115,10 @@ DESC
 			end
 			c_trials += 1
 		end
-		
+
 		return file_name
 	end
-	
+
 	def self.size_mb(file_path, round_val=6)
 		(File.size(file_path).to_f / 1024**2).round(round_val)
 	end
@@ -126,30 +126,27 @@ end
 
 
 class Dir
-	
-	$Dir_workify_desc = 
+
+	$Dir_workify_desc =
 <<DESC
 \tDir#workify(dir_path, sym_ign=false, &block)\n
 \t--> this method is used to yield the given block under terms of working with all the elements inside of the given dir_path.
-\t--> returns the array of the elements inside of the dir_path 
+\t--> returns the array of the elements inside of the dir_path
 \t--> returns false if the dir_path doesn't exist
 \t--> Ignores Symbolic Link to yield at default
 DESC
 
 	def self.workify(dir_path, sym_ign=false, &block)
 		return false if not Dir.exists?(dir_path)
-		
+
 		Dir.foreach(dir_path) do |file_name|
 			file_path = File.join(dir_path, file_name)
-			
+
 			next if file_name == "." or file_name == ".." or (File.symlink?(file_path) and not sym_ign)
-			
-			Dir.workify(file_path, sym_ign, &block) if File.directory?(file_path) 
-			
+
+			Dir.workify(file_path, sym_ign, &block) if File.directory?(file_path)
+
 			yield(file_path) if File.file?(file_path)
 		end
 	end
 end
-
-	
-		
