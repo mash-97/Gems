@@ -3,8 +3,10 @@
 require 'fileutils'
 require '../mashz.rb' if Dir.pwd() == File.dirname(File.absolute_path(__FILE__))
 
+# CPRX is to be translated as Copying files by matching extention regexp
 class CPRX
 
+	# Extentions in example: mp4, mp3, jpeg etc.
 	def initialize(source_directory=nil, destination_directory=nil, extentions=[])
 		@source = source_directory
 		@destination = destination_directory
@@ -41,11 +43,11 @@ class CPRX
 		puts("sleep(#{sleep_time})")
 		sleep(sleep_time)
 
-		puts("Checking Source: #{@source} :: #{exists = Dir.exists?(@source)}")
+		puts("Checking Source: #{@source} :: #{exists = Dir.exist?(@source)}")
 		raise "Source Is Not Appropriate" if not exists
 		puts()
 
-		puts("Checking Destination: #{@destination} :: #{exists = Dir.exists?(@destination)}")
+		puts("Checking Destination: #{@destination} :: #{exists = Dir.exist?(@destination)}")
 		if not exists then
 			puts("destination directory: #{destination} doesn't exist")
 			puts("Trying existifying the D directory: #{destination}")
@@ -58,7 +60,7 @@ class CPRX
 
 		puts = ->(string) { output_f.puts(string); puts(string);}
 		bytes_to_kb = ->(size) {size.to_f/1024**1}
-		bytes_to_mb = ->(size) {size.to_f/1024**2}
+		# bytes_to_mb = ->(size) {size.to_f/1024**2}
 		bytes_to_gb = ->(size) {size.to_f/1024**3}
 
 		total_size_processed = 0.0
@@ -116,7 +118,7 @@ class CPRX
 		output_f.close()
 
 	end
-	
+
 	private
 		include Mashz::Miscellaneous
 end
