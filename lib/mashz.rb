@@ -3,7 +3,7 @@
 module Mashz
   def load_interactively(dir_path, regexp = /\.rb$/, tabs="")
       # dir_path = File.absolute_path(dir_path)
-      return false if not Dir.exists?(dir_path)
+      return false if not Dir.exist?(dir_path)
 
       loadable_files = Dir.entries(dir_path).select{
           |filename|

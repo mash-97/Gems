@@ -83,7 +83,7 @@ class String
 	end
 
 	def consonants()
-		self.scan(/[^aeiouAEIOU\W\d\s]/)
+		self.scan(/[^aeiouAEIOU\W\d]/)
 	end
 
 	def titleize()
