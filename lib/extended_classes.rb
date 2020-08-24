@@ -89,6 +89,10 @@ class String
 	def titleize()
 		self.gsub(/(\A|\s)\w/){|letter| letter.upcase}
 	end
+	
+	def to_obj()
+		return eval(self)
+	end
 end
 
 
@@ -153,3 +157,8 @@ end
 
 	
 		
+class Symbol
+	def to_obj()
+		return eval(self.to_s)
+	end
+end
