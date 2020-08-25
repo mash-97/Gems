@@ -103,11 +103,11 @@ class File
 DESC
 
 	def self.uniqFin(basename, directory=Dir.pwd(), max_trials=100)
-		return nil if not Dir.exists?(directory)
+		return nil if not Dir.exist?(directory)
 		ext = File.extname(basename)
 		file_name = basename
 		c_trials = 1
-		while File.exists?(File.join(directory, file_name)) and c_trials <= max_trials do
+		while File.exist?(File.join(directory, file_name)) and c_trials <= max_trials do
 			if ext.to_s.length != 0 then
 				file_name = basename.sub(ext, "_"+Time.now.hash.positified.to_s+ext)
 			else
@@ -137,7 +137,7 @@ class Dir
 DESC
 
 	def self.workify(dir_path, sym_ign=false, &block)
-		return false if not Dir.exists?(dir_path)
+		return false if not Dir.exist?(dir_path)
 
 		Dir.foreach(dir_path) do |file_name|
 			file_path = File.join(dir_path, file_name)
@@ -158,3 +158,5 @@ class Object
 	end
 end
 
+
+puts File.uniqFin("mashz")
