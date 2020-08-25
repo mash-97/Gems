@@ -1,5 +1,9 @@
 #! /usr/bin/ruby
 
+require 'logger'
+
+$mashz_log = Logger.new($stdout)
+
 module Mashz
   def load_interactively(dir_path, regexp = /\.rb$/, tabs="")
       # dir_path = File.absolute_path(dir_path)

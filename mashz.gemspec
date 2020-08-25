@@ -1,7 +1,7 @@
 #! /usr/bin/ruby
 Gem::Specification.new do |spec|
 	spec.name = "mashz"
-	spec.version = "0.1.5"
+	spec.version = "0.2.0"
 	spec.summary = "Handyful Ruby Features"
 	spec.description = "Some extended ruby features for shortcut uses."
 	spec.license = "Nonstandard"

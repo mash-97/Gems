@@ -103,19 +103,28 @@ class File
 DESC
 
 	def self.uniqFin(basename, directory=Dir.pwd(), max_trials=100)
+		$mashz_log.debug("Inside File::uniqFin() with:\n\tbasename: #{basename}\n\tdirectory: #{directory}")
+		
+		
 		return nil if not Dir.exist?(directory)
 		ext = File.extname(basename)
+		$mashz_log.debug("extention: #{ext}")
+		
 		file_name = basename
 		c_trials = 1
 		while File.exist?(File.join(directory, file_name)) and c_trials <= max_trials do
+			$mashz_log.debug("c_trials: #{c_trials}")
+			
 			if ext.to_s.length != 0 then
 				file_name = basename.sub(ext, "_"+Time.now.hash.positified.to_s+ext)
+				$mashz_log.debug("if: file_name: #{file_name}")
 			else
 				file_name = basename+"_"+Time.now.hash.positified.to_s
+				$mashz_log.debug("else: file_name: #{file_name}")
 			end
 			c_trials += 1
 		end
-
+		$mashz_log.debug("return: file_name: #{file_name}")
 		return file_name
 	end
 
@@ -159,4 +168,3 @@ class Object
 end
 
 
-puts File.uniqFin("mashz")
