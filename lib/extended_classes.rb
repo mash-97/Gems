@@ -112,9 +112,10 @@ DESC
 		
 		file_name = basename
 		c_trials = 1
+
 		while File.exist?(File.join(directory, file_name)) and c_trials <= max_trials do
 			$mashz_log.debug("c_trials: #{c_trials}")
-			
+
 			if ext.to_s.length != 0 then
 				file_name = basename.sub(ext, "_"+Time.now.hash.positified.to_s+ext)
 				$mashz_log.debug("if: file_name: #{file_name}")
@@ -124,6 +125,7 @@ DESC
 			end
 			c_trials += 1
 		end
+
 		$mashz_log.debug("return: file_name: #{file_name}")
 		return file_name
 	end
@@ -148,6 +150,7 @@ DESC
 	def self.workify(dir_path, sym_ign=false, &block)
 		return false if not Dir.exist?(dir_path)
 
+
 		Dir.foreach(dir_path) do |file_name|
 			file_path = File.join(dir_path, file_name)
 
@@ -160,11 +163,9 @@ DESC
 	end
 end
 
-
 class Object
 	def to_obj
 		return eval(self.to_s)
 	end
 end
-
 
