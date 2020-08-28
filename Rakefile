@@ -1,5 +1,9 @@
 # run MashzTest
 require 'rake/testtask'
+require 'rake/clean'
+
+# clening test attempted files 
+CLEAN.include("test/*.test_f")
 
 desc "Run MashzTest"
 task :run_MashzTest do

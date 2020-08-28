@@ -9,6 +9,7 @@ else
 end
 
 class MashzTest< Minitest::Test
+
 	def test_basic()
 		assert_equal("This Is Test.", "this is test.".titleize())
 		assert_equal("THi5 3is A Te*t9", "tHi5 3is A te*t9".titleize())
@@ -28,4 +29,11 @@ class MashzTest< Minitest::Test
 		assert_equal("Abcd Efg Hij Klkmn O P Qrstuv Wxyz", "abcd efg hij klkmn o p qrstuv wxyz".titleize())
 	end
 
+	def test_File_uniqFin()
+		directory_name = File.dirname(File.absolute_path(__FILE__))
+		temp_file = Time.now.hash.positified.to_s+".test_f"
+		File.create(File.join(directory_name, temp_file))
+		assert(temp_file!=File.uniqFin(temp_file, directory_name))
+		File.delete(File.join(directory_name, temp_file))
+	end
 end

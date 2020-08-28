@@ -1,8 +1,16 @@
 #! /usr/bin/ruby
 
 require 'logger'
+$LOG_FORMATS = {
+  :default => proc {|*args| Logger.Formatter.new.call(*args)},
+  :simple =>  proc {
+    |severity, time, prog_name, message|
+    "\n##{severity}: [#{time.year}:#{time.month}:#{time.day} :: #{time.hour} : #{time.min} : #{time.sec}] #{": "+prog_name if prog_name} \n:--> #{message}\n"
+  }
+}
 
 $mashz_log = Logger.new($stdout)
+$mashz_log.formatter = $LOG_FORMATS[:simple]
 
 module Mashz
   def load_interactively(dir_path, regexp = /\.rb$/, tabs="")
