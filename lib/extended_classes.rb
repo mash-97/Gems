@@ -107,7 +107,7 @@ DESC
 
 
 		if not Dir.exist?(directory) then
-			$mashz_log.warning("directory: #{directory} not found!")
+			$mashz_log.warn("directory: #{directory} not found!")
 			return false
 		end
 
