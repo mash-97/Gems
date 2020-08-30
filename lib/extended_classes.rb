@@ -68,6 +68,20 @@ DESC
 
 		return self
 	end
+	
+	def includes_all?(array)
+		array.each{|element|
+			return false if not self.include?(element)
+		}
+		return true
+	end
+	
+	def includes_any?(array)
+		array.each{|element|
+			return true if self.include?(element)
+		end 
+		return false
+	end
 
 	def nprint()
 		(0...(self.length-1)).each{|indx| print("#{self[indx]} ")}
