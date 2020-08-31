@@ -46,6 +46,10 @@ DESC
 		(0...(self.length-1)).each{|indx| print("#{self[indx]} ")}
 		puts(print(self[self.length-1]))
 	end
+	
+	def relate_with_as_hash_value(array)
+		self.map.with_index{|element, index| [element, array[index]]}.to_h()
+	end
 
 end
 
