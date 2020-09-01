@@ -27,7 +27,7 @@ module Mashz
 				file_name = @name_table.sample()+"."+@extentions.sample()
 				file_name = File.uniqFin(file_name, @dest_dir)
 				file_path = File.join(@dest_dir, file_name)
-				created_files << self.create_file_with_random_bytes(file_path, @file_sizes.sample())
+				created_files << create_file_with_random_bytes(file_path, @file_sizes.sample())
 			end
 			return created_files
 		end
