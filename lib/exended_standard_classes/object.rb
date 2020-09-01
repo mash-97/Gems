@@ -29,5 +29,12 @@ class Object
 	def with()
 		self
 	end
+	def take()
+		self
+	end
+	def one()
+		self
+	end
 end
+
 
