@@ -38,7 +38,8 @@ end
 		
 		
 
-Rake::TestTask.new(:test) do |t|
+Rake::TestTask.new(:test => ["check:rfg_test_dir"]) do |t|
   t.pattern = 'test/*_test.rb'
   t.warning = true
 end
+

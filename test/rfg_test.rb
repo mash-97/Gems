@@ -7,6 +7,8 @@ else
 	require './lib/mashz.rb'
 end
 
+include Mashz 
+
 class RFGTest < Minitest::Test
 	@@dest_dir = File.join(File.absolute_path(__dir__), "rfg_test")
 	@@number_of_files = 50
@@ -31,7 +33,6 @@ class RFGTest < Minitest::Test
 		
 		# check file_names
 		fmr = Regexp.new("(#{rfg.name_table.join("|")}).*\\.(#{rfg.extentions.join("|")})$")
-		puts("file matching regexp #{fmr}")
 		created_files.each do |file_path|
 			assert(file_path=~fmr)
 		end
