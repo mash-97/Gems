@@ -24,7 +24,7 @@ module Mashz
       loadable_files = Dir.entries(dir_path).select{
           |filename|
           file_path = File.join(dir_path, filename)
-          filename.match?(regexp) and File.file?(file_path) and not File.symlink?(file_path)
+          filename.match(regexp) and File.file?(file_path) and not File.symlink?(file_path)
       }.sort()
 
       directories = Dir.entries(dir_path).select{
