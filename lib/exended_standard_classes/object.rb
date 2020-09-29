@@ -6,35 +6,13 @@ class Object
 	end
 	
 	# ....
-	def and()
-		self
+	def ownself(identifier=nil)
+		return self
 	end
 	
-	def is()
-		self
-	end
-	
-	def do()
-		self
-	end
-	
-	def give()
-		self
-	end
-	
-	def what?()
-		self
-	end
-	
-	def with()
-		self
-	end
-	def take()
-		self
-	end
-	def one()
-		self
-	end
+	alias :def :ownself
+	alias :class :ownself
+	alias :if :ownself
 end
 
 
