@@ -10,9 +10,9 @@ class Object
 		return self
 	end
 	
-	alias :def :ownself
-	alias :class :ownself
-	alias :if :ownself
+	alias :def! :ownself
+	alias :class! :ownself
+	alias :if! :ownself
 end
 
 
