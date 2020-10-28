@@ -4,5 +4,33 @@ $LOAD_PATH.unshift(lib_path) unless $LOAD_PATH.include?(lib_path)
 
 require 'mashz'
 require 'irb'
+require 'thor'
 
-IRB.start()
+
+class MashzBin < Thor 
+	
+	option :times, :type=>:numeric, :aliases => :t
+	desc "tree TIMES", "Show tree of the current directory TIMES times."
+	def tree()
+		time = options[:times] || 1
+		s = Time.now
+		i = []
+		time.times do
+			es = Time.now
+			puts `tree` 
+			i << Time.now-es
+		end
+		i<<Time.now-s
+		puts
+		puts
+		puts("=======================================================")
+		puts("Execution Times: ")
+		puts(i.to_s)
+		puts("======================================================")
+		
+	end
+	
+	
+end
+
+MashzBin.start()
